@@ -11,7 +11,6 @@ const AddTransaction = () => {
     console.log('data', data);
 
     if (error) {
-      alert(error);
       toast.error(error);
     } else {
       toast.success('Transaction added');
@@ -20,23 +19,28 @@ const AddTransaction = () => {
   };
   return (
     <div>
-      <h3>add transaction</h3>
+      <h3>Add Transaction</h3>
       <form ref={formRef} action={clientAction}>
         <div className="form-control">
-          <label htmlFor="text">text</label>
-          <input type="text" id="text" name="text" placeholder="enter text" />
+          <label htmlFor="text">Income or Expense</label>
+          <input
+            type="text"
+            id="text"
+            name="text"
+            placeholder="Enter Icome or Expense"
+          />
         </div>
         <div className="form-control">
-          <label htmlFor="amount">amount</label>
+          <label htmlFor="amount">Amount (+ for income, - for expense)</label>
           <input
             type="number"
             id="amount"
             name="amount"
-            placeholder="enter amount"
+            placeholder="Enter amount"
             step="0.01"
           />
         </div>
-        <button className="btn">add transaction</button>
+        <button className="btn">Add Transaction</button>
       </form>
     </div>
   );

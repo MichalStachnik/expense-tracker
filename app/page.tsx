@@ -12,7 +12,7 @@ const HomePage = async () => {
 
   return (
     <main>
-      <h1>welcome, {user.firstName}</h1>
+      <h1>Welcome, {user.firstName}</h1>
       <Balance />
       <IncomeExpense />
       <AddTransaction />

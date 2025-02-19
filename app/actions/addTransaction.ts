@@ -20,8 +20,9 @@ const addTransaction = async (
   const amountValue = formData.get('amount');
 
   if (!textValue || textValue === '' || !amountValue) {
+    const reason = !textValue || textValue === '' ? 'Text' : 'Amount';
     return {
-      error: 'value missing',
+      error: `${reason} value missing`,
     };
   }
 
@@ -34,10 +35,6 @@ const addTransaction = async (
     return { error: 'user not found' };
   }
 
-  // const transactionData: TransactionData = {
-  //   text,
-  //   amount,
-  // };
   try {
     const transactionData: TransactionData = await db.transaction.create({
       data: {

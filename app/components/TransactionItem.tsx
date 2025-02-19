@@ -22,8 +22,13 @@ const TransactionItem = ({ transaction }: { transaction: Transaction }) => {
       key={transaction.id}
       className={transaction.amount < 0 ? 'minus' : 'plus'}
     >
-      {transaction.text}
-      {transaction.amount}
+      <span>{transaction.text}</span>
+      <span>
+        {new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        }).format(transaction.amount)}
+      </span>
       <button
         onClick={() => handleDeleteTransaction(transaction.id)}
         className="delete-btn"

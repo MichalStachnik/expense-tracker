@@ -6,11 +6,21 @@ const IncomeExpense = async () => {
     <div className="inc-exp-container">
       <div>
         <h4>Income</h4>
-        <p className="money plus">{income}</p>
+        <p className="money plus">
+          {new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+          }).format(income ?? 0)}
+        </p>
       </div>
       <div>
-        <h4>Income</h4>
-        <p className="money minus">{expense}</p>
+        <h4>Expenses</h4>
+        <p className="money minus">
+          {new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+          }).format(expense ?? 0)}
+        </p>
       </div>
     </div>
   );
