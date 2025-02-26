@@ -224,3 +224,61 @@ input[type='number'] {
 .list li:hover .delete-btn {
   opacity: 1;
 }
+
+/* Edit button and dialog styles */
+.transaction-actions {
+  display: flex;
+  gap: 5px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(-100%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.list li:hover .transaction-actions {
+  opacity: 1;
+}
+
+.edit-btn {
+  cursor: pointer;
+  background-color: var(--grey-dark);
+  border: 0;
+  color: #fff;
+  font-size: 16px;
+  line-height: 20px;
+  padding: 2px 5px;
+}
+
+.edit-dialog {
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: var(--box-shadow);
+  border: 1px solid var(--grey-light);
+  width: 90%;
+  max-width: 400px;
+}
+
+.edit-dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.update-btn {
+  background-color: var(--main-dark);
+}
+
+.cancel-btn {
+  background-color: var(--error-light);
+  &:hover {
+    background-color: var(--error);
+    color: var(--grey-dark);
+  }
+}

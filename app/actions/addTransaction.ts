@@ -1,7 +1,7 @@
 'use server';
+import { revalidatePath } from 'next/cache';
 import { auth } from '@clerk/nextjs/server';
 import { db } from '@/lib/db';
-import { revalidatePath } from 'next/cache';
 
 interface TransactionData {
   text: string;
@@ -32,7 +32,7 @@ const addTransaction = async (
   const { userId } = await auth();
 
   if (!userId) {
-    return { error: 'user not found' };
+    return { error: 'User not found' };
   }
 
   try {
