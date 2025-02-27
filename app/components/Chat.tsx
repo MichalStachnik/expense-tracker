@@ -1,4 +1,5 @@
 'use client';
+
 import { useChat } from '@ai-sdk/react';
 
 const Chat = () => {
