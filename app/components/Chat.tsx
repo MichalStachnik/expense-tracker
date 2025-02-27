@@ -2,15 +2,20 @@
 import { useChat } from '@ai-sdk/react';
 
 const Chat = () => {
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
+  const { messages, input, handleInputChange, handleSubmit } = useChat({
+    maxSteps: 5,
+  });
+
   return (
     <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
-      {messages.map((m) => (
-        <div key={m.id} className="whitespace-pre-wrap">
-          {m.role === 'user' ? 'User: ' : 'Agent: '}
-          {m.content}
-        </div>
-      ))}
+      {messages.map((m) => {
+        return (
+          <div key={m.id} className="whitespace-pre-wrap">
+            {m.role === 'user' ? 'User: ' : 'Agent: '}
+            {m.content}
+          </div>
+        );
+      })}
 
       <form onSubmit={handleSubmit}>
         <input
