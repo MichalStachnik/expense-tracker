@@ -28,6 +28,7 @@ model Transaction {
   id        String   @id @default(uuid())
   text      String
   amount    Float
+  imageUrl  String?
   // Relation to user
   userId    String
   user      User     @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade)

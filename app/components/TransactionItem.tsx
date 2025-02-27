@@ -4,12 +4,16 @@ import { Transaction } from '@/types/Transaction';
 import deleteTransaction from '../actions/deleteTransaction';
 import { useRef, useState } from 'react';
 import updateTransaction from '../actions/updateTransaction';
+import Image from 'next/image';
 
 const TransactionItem = ({ transaction }: { transaction: Transaction }) => {
   const [formData, setFormData] = useState({
     text: transaction.text,
     amount: transaction.amount,
   });
+  const [previewUrl, setPreviewUrl] = useState<string | null>(
+    transaction.imageUrl || null
+  );
 
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -33,6 +37,7 @@ const TransactionItem = ({ transaction }: { transaction: Transaction }) => {
       text: transaction.text,
       amount: transaction.amount,
     });
+    setPreviewUrl(transaction.imageUrl || null);
   };
 
   const closeEditDialog = () => {
@@ -45,6 +50,14 @@ const TransactionItem = ({ transaction }: { transaction: Transaction }) => {
       ...prev,
       [name]: name === 'amount' ? parseFloat(value) : value,
     }));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -72,13 +85,38 @@ const TransactionItem = ({ transaction }: { transaction: Transaction }) => {
         key={transaction.id}
         className={transaction.amount < 0 ? 'minus' : 'plus'}
       >
-        <span>{transaction.text}</span>
-        <span>
-          {new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-          }).format(transaction.amount)}
-        </span>
+        <div className="transaction-content">
+          <span className="transaction-text">{transaction.text}</span>
+          <span className="transaction-amount">
+            {new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD',
+            }).format(transaction.amount)}
+          </span>
+
+          {transaction.imageUrl && (
+            <div>
+              <button
+                className="view-receipt-btn"
+                onClick={() =>
+                  transaction.imageUrl &&
+                  window.open(transaction.imageUrl, '_blank')
+                }
+              >
+                <div className="image-preview">
+                  <Image
+                    src={transaction.imageUrl}
+                    alt="Receipt preview"
+                    width={200}
+                    height={250}
+                    style={{ objectFit: 'contain' }}
+                  />
+                </div>
+              </button>
+            </div>
+          )}
+        </div>
+
         <div className="transaction-actions">
           <button
             onClick={openEditDialog}
@@ -127,6 +165,31 @@ const TransactionItem = ({ transaction }: { transaction: Transaction }) => {
               required
             />
           </div>
+
+          <div className="form-control">
+            <label htmlFor="edit-receipt">Receipt Image</label>
+
+            <input
+              type="file"
+              id="edit-receipt"
+              name="receipt"
+              accept="image/*"
+              onChange={handleFileChange}
+            />
+
+            {previewUrl && (
+              <div className="image-preview">
+                <Image
+                  src={previewUrl}
+                  alt="Receipt preview"
+                  width={200}
+                  height={250}
+                  style={{ objectFit: 'contain' }}
+                />
+              </div>
+            )}
+          </div>
+
           <div className="dialog-actions">
             <button
               type="button"
