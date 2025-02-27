@@ -4,4 +4,5 @@ export interface Transaction {
   amount: number;
   userId: string;
   createdAt: Date;
+  imageUrl?: string | null;
 }

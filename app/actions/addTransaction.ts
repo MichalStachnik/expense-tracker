@@ -2,10 +2,12 @@
 import { revalidatePath } from 'next/cache';
 import { auth } from '@clerk/nextjs/server';
 import { db } from '@/lib/db';
+import uploadImage from '@/lib/uploadImage';
 
 interface TransactionData {
   text: string;
   amount: number;
+  receiptUrl?: string;
 }
 
 interface TransactionResult {
@@ -18,6 +20,7 @@ const addTransaction = async (
 ): Promise<TransactionResult> => {
   const textValue = formData.get('text');
   const amountValue = formData.get('amount');
+  const receiptFile = formData.get('receipt') as File;
 
   if (!textValue || textValue === '' || !amountValue) {
     const reason = !textValue || textValue === '' ? 'Text' : 'Amount';
@@ -36,11 +39,26 @@ const addTransaction = async (
   }
 
   try {
+    let receiptUrl = '';
+
+    if (receiptFile && receiptFile.size > 0) {
+      const { url, error } = await uploadImage(receiptFile);
+
+      if (error) {
+        return { error };
+      }
+
+      if (url) {
+        receiptUrl = url;
+      }
+    }
+
     const transactionData: TransactionData = await db.transaction.create({
       data: {
         text,
         amount,
         userId,
+        imageUrl: receiptUrl,
       },
     });
 
