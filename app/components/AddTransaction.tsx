@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import addTransaction from '../actions/addTransaction';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
+import { Button } from '@/components/ui/button';
 
 const AddTransaction = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -77,7 +78,7 @@ const AddTransaction = () => {
             </div>
           )}
         </div>
-        <button className="btn">Add Transaction</button>
+        <Button>Add Transaction</Button>
       </form>
     </div>
   );
