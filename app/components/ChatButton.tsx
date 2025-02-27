@@ -17,7 +17,7 @@ export function ChatButton() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     maxSteps: 5,
   });
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
     <>
@@ -46,6 +46,11 @@ export function ChatButton() {
           </CardHeader>
           <CardContent className="h-80 overflow-y-auto">
             <div className="space-y-4">
+              <div className={'flex justify-start'}>
+                <div className={`rounded-lg px-3 py-2 max-w-[80%] bg-muted`}>
+                  Hi, I am your personal expense assitant, what can I help with?
+                </div>
+              </div>
               {messages.map((message, index) => (
                 <div
                   key={index}
