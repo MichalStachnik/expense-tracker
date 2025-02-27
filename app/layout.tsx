@@ -12,8 +12,8 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: 'Expense Tracker',
-  description: 'Expense Tracker',
+  title: 'Quicker Books',
+  description: 'a minimalist expense tracker app',
 };
 
 export default function RootLayout({

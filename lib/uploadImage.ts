@@ -20,7 +20,7 @@ const uploadImage = async (
         dataURI,
         {
           resource_type: 'auto',
-          folder: 'expense-tracker',
+          folder: 'quicker-books',
         },
         (error, result) => {
           if (error) reject(error);
