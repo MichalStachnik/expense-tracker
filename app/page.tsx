@@ -7,6 +7,7 @@ import TransactionList from './components/TransactionList';
 import Chat from './components/Chat';
 import Header from './components/Header';
 import { ToastContainer } from 'react-toastify';
+import { ChatButton } from './components/ChatButton';
 
 const HomePage = async () => {
   const user = await currentUser();
@@ -24,6 +25,7 @@ const HomePage = async () => {
           <AddTransaction />
           <TransactionList />
           <Chat />
+          <ChatButton />
         </div>
       </main>
       <ToastContainer theme="dark" />

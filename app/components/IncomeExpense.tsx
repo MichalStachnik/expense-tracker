@@ -20,7 +20,7 @@ const IncomeExpense = async () => {
       <Card>
         <CardContent className="p-6">
           <h4 className="text-sm font-semibold uppercase mb-2">Expenses</h4>
-          <p className="text-2xl font-bold text-destructive">
+          <p className="text-2xl font-bold text-rose-500">
             {new Intl.NumberFormat('en-US', {
               style: 'currency',
               currency: 'USD',

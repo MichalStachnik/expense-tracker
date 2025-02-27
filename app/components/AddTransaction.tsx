@@ -58,16 +58,27 @@ const AddTransaction = () => {
         </div>
         <div className="form-control">
           <label htmlFor="receipt">Receipt Image (optional)</label>
-          <input
-            type="file"
-            id="receipt"
-            name="receipt"
-            accept="image/*"
-            onChange={handleFileChange}
-          />
+          <div className="relative">
+            <Button
+              type="button"
+              variant="secondary"
+              className="relative"
+              onClick={() => document.getElementById('receipt')?.click()}
+            >
+              Choose Receipt Image
+            </Button>
+            <input
+              type="file"
+              id="receipt"
+              name="receipt"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+          </div>
 
           {previewUrl && (
-            <div className="image-preview">
+            <div className="image-preview mt-4">
               <Image
                 src={previewUrl}
                 alt="Receipt preview"
@@ -78,7 +89,9 @@ const AddTransaction = () => {
             </div>
           )}
         </div>
-        <Button>Add Transaction</Button>
+        <div className="flex items-center justify-center mt-4">
+          <Button>Add Transaction</Button>
+        </div>
       </form>
     </div>
   );
