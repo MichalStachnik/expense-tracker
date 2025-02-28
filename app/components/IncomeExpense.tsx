@@ -1,5 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card';
 import getIncomeExpense from '../actions/getIncomeExpense';
+import AnimatedNumberBasic from './AnimatedNumberBasic';
 
 const IncomeExpense = async () => {
   const { income, expense } = await getIncomeExpense();
@@ -9,10 +10,11 @@ const IncomeExpense = async () => {
         <CardContent className="p-6">
           <h4 className="text-sm font-semibold uppercase mb-2">Income</h4>
           <p className="text-2xl font-bold text-emerald-500">
-            {new Intl.NumberFormat('en-US', {
+            {/* {new Intl.NumberFormat('en-US', {
               style: 'currency',
               currency: 'USD',
-            }).format(income ?? 0)}
+            }).format(income ?? 0)} */}
+            <AnimatedNumberBasic value={income ?? 0} />
           </p>
         </CardContent>
       </Card>
@@ -21,10 +23,11 @@ const IncomeExpense = async () => {
         <CardContent className="p-6">
           <h4 className="text-sm font-semibold uppercase mb-2">Expenses</h4>
           <p className="text-2xl font-bold text-rose-500">
-            {new Intl.NumberFormat('en-US', {
+            {/* {new Intl.NumberFormat('en-US', {
               style: 'currency',
               currency: 'USD',
-            }).format(expense ?? 0)}
+            }).format(expense ?? 0)} */}
+            <AnimatedNumberBasic value={expense ?? 0} />
           </p>
         </CardContent>
       </Card>

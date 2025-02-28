@@ -5,6 +5,20 @@ import deleteTransaction from '../actions/deleteTransaction';
 import { useRef, useState } from 'react';
 import updateTransaction from '../actions/updateTransaction';
 import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { ImagePlus } from 'lucide-react';
 
 const TransactionItem = ({ transaction }: { transaction: Transaction }) => {
   const [formData, setFormData] = useState({
@@ -31,14 +45,14 @@ const TransactionItem = ({ transaction }: { transaction: Transaction }) => {
     toast.success(message);
   };
 
-  const openEditDialog = () => {
-    dialogRef.current?.showModal();
-    setFormData({
-      text: transaction.text,
-      amount: transaction.amount,
-    });
-    setPreviewUrl(transaction.imageUrl || null);
-  };
+  // const openEditDialog = () => {
+  //   dialogRef.current?.showModal();
+  //   setFormData({
+  //     text: transaction.text,
+  //     amount: transaction.amount,
+  //   });
+  //   setPreviewUrl(transaction.imageUrl || null);
+  // };
 
   const closeEditDialog = () => {
     dialogRef.current?.close();
@@ -118,13 +132,13 @@ const TransactionItem = ({ transaction }: { transaction: Transaction }) => {
         </div>
 
         <div className="transaction-actions">
-          <button
+          {/* <button
             onClick={openEditDialog}
             className="edit-btn"
             aria-label="Edit transaction"
           >
             ✎
-          </button>
+          </button> */}
           <button
             onClick={() => handleDeleteTransaction(transaction.id)}
             className="delete-btn"
@@ -204,6 +218,93 @@ const TransactionItem = ({ transaction }: { transaction: Transaction }) => {
           </div>
         </form>
       </dialog>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline">Edit Transaction</Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <form onSubmit={handleSubmit}>
+            <DialogHeader>
+              <DialogTitle>Edit profile</DialogTitle>
+              <DialogDescription>
+                Make changes to your transaction here.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="edit-text" className="text-right">
+                  Description
+                </Label>
+                <Input
+                  className="col-span-3"
+                  type="text"
+                  id="edit-text"
+                  name="text"
+                  value={formData.text}
+                  onChange={handleInputChange}
+                  placeholder="Enter description"
+                  required
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="edit-amount" className="text-right">
+                  Amount (+ for income, - for expense)
+                </Label>
+                <Input
+                  className="col-span-3"
+                  type="number"
+                  id="edit-amount"
+                  name="amount"
+                  value={formData.amount}
+                  onChange={handleInputChange}
+                  placeholder="Enter amount"
+                  step="0.01"
+                  required
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="edit-receipt" className="text-right">
+                  Receipt Image
+                </Label>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="col-span-3"
+                  onClick={() => document.getElementById('receipt')?.click()}
+                >
+                  <ImagePlus />
+                  Add Receipt Image
+                </Button>
+                <Input
+                  className="hidden"
+                  type="file"
+                  id="edit-receipt"
+                  name="receipt"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                />
+
+                {previewUrl && (
+                  <div className="image-preview">
+                    <Image
+                      src={previewUrl}
+                      alt="Receipt preview"
+                      width={200}
+                      height={250}
+                      style={{ objectFit: 'contain' }}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button type="submit">Save changes</Button>
+              </DialogClose>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

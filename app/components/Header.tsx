@@ -1,6 +1,7 @@
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
 import ThemeToggle from './ThemeToggle';
+import ScrollingText from './ScrollingText';
 
 const Header = async () => {
   return (
@@ -9,14 +10,16 @@ const Header = async () => {
         <Link href="/" className="text-xl font-bold hover:opacity-80">
           Quicker Books
         </Link>
-
+        <div className="w-[140px]">
+          <ScrollingText />
+        </div>
         <div className="flex items-center gap-4">
           <ThemeToggle />
           <SignedOut>
             <SignInButton />
           </SignedOut>
           <SignedIn>
-            <UserButton afterSignOutUrl="/" />
+            <UserButton />
           </SignedIn>
         </div>
       </div>
